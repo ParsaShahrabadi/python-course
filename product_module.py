@@ -23,19 +23,9 @@ def get_data():
     else:
         return None
 
-
-def limit(product):
-    total = product["price"]*product["quantity"]
-    if total < 1000000:
-        return total
-    else:
-        return None
-
-
-
 def show_product(product_list):
     for product in product_list:
-        sum_product = limit(product)
+        sum_product = product["quantity"] * product["price"]
         print(f"{product['name']:<10} {product['brand']:<8} {product['quantity']:>4} {product['price']:>8}")
     print("---------------------------------------")
     print("sum: ",sum_product)

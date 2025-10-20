@@ -1,6 +1,6 @@
 from product_module import *
 
-while total != None :
+for i in range(5) :
     product = get_data()
 
     if product != None :
@@ -8,7 +8,6 @@ while total != None :
         print("save")
     else:
         print("invalid data!!!")
-    limit(product)
 
 show_product(product_list)
 
