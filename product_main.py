@@ -1,15 +1,44 @@
+from tkinter import *
 from product_module import *
 
-for i in range(5) :
-    product = get_data()
+window = Tk()
+window.title("Super Market")
+window.geometry("500x400")
 
-    if product != None :
-        product_list.append(product)
-        print("save")
-    else:
-        print("invalid data!!!")
 
-show_product(product_list)
+#name
+Label(window, text="name").place(x = 25, y = 25)
+name = StringVar()
+Entry(window, textvariable=name).place(x = 100,y = 25)
+
+#brand
+Label(window, text="brand").place(x = 25, y = 50)
+brand = StringVar()
+Entry(window, textvariable=brand).place(x = 100,y = 50)
+
+#quantity
+Label(window, text="quantity" ).place(x = 25,y = 75)
+quantity= IntVar()
+Entry(window,textvariable=quantity).place(x = 100,y = 75)
+
+#price
+Label(window, text="price").place(x = 25,y = 100)
+price = IntVar()
+Entry(window, textvariable=price).place(x =100,y = 100)
+
+# expier_date
+Label(window,text="expire_date").place(x = 25,y = 125)
+expire_date = StringVar()
+Entry(window,textvariable=expire_date).place(x = 100,y = 125)
+
+Button(window,text="save", command = lambda:save(name,brand,price,quantity,expire_date)).place(x = 100,y = 150, width = 125)
+
+window.mainloop()
+
+
+
+
+
 
 
 
