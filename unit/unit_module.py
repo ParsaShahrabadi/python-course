@@ -3,7 +3,7 @@ from tkinter import messagebox
 lessons_list = []
 
 def code_validator(code):
-    if not re.match("^[0-9]{1,4}$",code):
+    if not re.match("^[0-9]{1,4}$",str(code)):
         raise ValueError("Invalid lesson code!!!")
 
 def name_validator(name):
@@ -15,28 +15,7 @@ def teacher_validator(teacher):
         raise ValueError("invalid teacher name!!!")
 
 def unit_validator(unit):
-    if not re.match("[1-3]{1,5}",unit):
+    if not (type(unit) == int and unit in [1,2,3,5]):
         raise ValueError("invalid unit!!!")
 
-def save(code,name,teacher,unit):
-    try:
-        code_validator(code.get())
-        name_validator(name.get())
-        teacher_validator(teacher.get())
-        unit_validator(unit.get())
-
-        lessons = {"code":code.get(),
-                   "name":name.get(),
-                   "teacher":teacher.get(),
-                   "unit":unit.get()}
-
-        lessons_list.append(lessons)
-
-        messagebox.showinfo("Success","Unit has been saved")
-        code.set(0)
-        name.set("")
-        teacher.set("")
-        unit.set(0)
-    except Exception as e:
-        messagebox.showerror("Save Error",f"Error : {e}")
 
