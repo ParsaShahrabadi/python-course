@@ -1,35 +1,42 @@
-from tkinter import *
+import re
+from tkinter import messagebox
+lessons_list = []
 
-window = Tk()
-window.title("unit selection")
-window.geometry("500x500")
+def code_validator(code):
+    if not re.match("^[0-9]{1,4}$",code):
+        raise ValueError("Invalid lesson code!!!")
 
-#lesson_code
-Label(window, text="lesson_code").place(x = 150, y = 25)
-code = IntVar()
-Entry(window,textvariable=code).place(x = 230,y = 25)
+def name_validator(name):
+    if not re.match("^[a-zA-Z\s]{3,30}$",name):
+        raise ValueError("invalid lesson name!!!")
 
-#lesson_name
-Label(window, text="lesson_name").place(x = 150, y = 50)
-name = StringVar()
-Entry(window,textvariable=name).place(x = 230,y = 50)
+def teacher_validator(teacher):
+    if not re.match("^[a-zA-Z\s]{3,30}$",teacher):
+        raise ValueError("invalid teacher name!!!")
 
-#lesson_teacher
-Label(window, text="lesson_teacher").place(x = 150, y = 75)
-teacher = StringVar()
-Entry(window, textvariable=teacher).place(x = 230 , y =75 )
+def unit_validator(unit):
+    if not re.match("[1-3]{1,5}",unit):
+        raise ValueError("invalid unit!!!")
 
-#lesson_unit
-Label(window, text="lesson_unit").place(x = 150 , y = 100)
-unit = IntVar()
-Entry(window, textvariable=unit).place(x = 230 , y = 100)
+def save(code,name,teacher,unit):
+    try:
+        code_validator(code.get())
+        name_validator(name.get())
+        teacher_validator(teacher.get())
+        unit_validator(unit.get())
 
+        lessons = {"code":code.get(),
+                   "name":name.get(),
+                   "teacher":teacher.get(),
+                   "unit":unit.get()}
 
+        lessons_list.append(lessons)
 
+        messagebox.showinfo("Success","Unit has been saved")
+        code.set(0)
+        name.set("")
+        teacher.set("")
+        unit.set(0)
+    except Exception as e:
+        messagebox.showerror("Save Error",f"Error : {e}")
 
-
-
-
-
-
-window.mainloop()

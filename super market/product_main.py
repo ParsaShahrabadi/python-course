@@ -31,7 +31,7 @@ Label(window,text="expire_date").place(x = 25,y = 125)
 expire_date = StringVar()
 Entry(window,textvariable=expire_date).place(x = 100,y = 125)
 
-Button(window,text="save", command = lambda:save(name,brand,price,quantity,expire_date)).place(x = 100,y = 150, width = 125)
+Button(window,text="Save", command = lambda:save(name,brand,price,quantity,expire_date)).place(x = 100,y = 150, width = 125)
 Button(window,text="Total",command = lambda:total(quantity,price) ).place(x = 100,y = 175, width = 125)
 
 
