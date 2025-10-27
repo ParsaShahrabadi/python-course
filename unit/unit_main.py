@@ -1,7 +1,6 @@
 from tkinter import *
 from unit_module import *
 
-
 def save():
     try:
         code_validator(code.get())
@@ -23,6 +22,7 @@ def save():
         unit.set(0)
     except Exception as e:
         messagebox.showerror("Save Error", f"Error : {e}")
+
 
 
 window = Tk()

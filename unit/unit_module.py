@@ -1,5 +1,6 @@
 import re
 from tkinter import messagebox
+
 lessons_list = []
 
 def code_validator(code):
