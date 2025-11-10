@@ -41,7 +41,7 @@ def save():
 
 def lode():
     my_file = open("products","rb")
-    product_list = pickle.load(my_file)
+    product_list=(pickle.load(my_file))
     for product in product_list:
         table.insert("", END, values=tuple(product.values()))
     user_id.set(len(product_list)+1)
