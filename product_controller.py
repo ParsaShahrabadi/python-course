@@ -1,5 +1,6 @@
 import re
 from datetime import datetime, date, time
+from os import remove
 
 from product_main import total
 from product_modell import Products
@@ -34,6 +35,7 @@ class ProductsController:
 
         return True
 
+    @staticmethod
     def validate_and_save(id, name, brand, quantity, price, expire_date):
 
             try:
@@ -52,6 +54,7 @@ class ProductsController:
             except Exception as e:
                 return False, f"Failed to save product: {e}"
 
+    @staticmethod
     def edit(id, name, brand, quantity, price, expire_date):
 
             try:
@@ -65,10 +68,23 @@ class ProductsController:
                 product = Products(id,name,brand,quantity,expire_date,price,total)
                 product_da = ProductDataAccecc()
                 product_da.edit(product)
-                return True, "Product Saved Successfully"
+                return True, "Product edited"
 
             except Exception as e:
-                return False, f"Failed to save product: {e}"
+                return False, f"Error edit product: {e}"
+
+    @staticmethod
+    def remove(id):
+        try:
+            product_da = ProductDataAccecc()
+            product_da.romove(id)
+            return True, "Product Removed"
+        except Exception as e:
+            return False, f"Error removing Product{e}"
+
+    @staticmethod
+    def find_all():
+        try:
 
 
 
