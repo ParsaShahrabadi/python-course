@@ -85,7 +85,10 @@ class ProductsController:
     @staticmethod
     def find_all():
         try:
-
+            product_da = ProductDataAccecc()
+            return True, product_da.find_all()
+        except Exception as e:
+            return False, f"Error find product {e}"
 
 
 
