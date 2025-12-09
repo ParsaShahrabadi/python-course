@@ -1,1 +1,1 @@
-نوشت لیست محصولات وارد شده در ستون های مرتب شده بر اساس نام برند قیمت و تعداد.جمع مبلغ.و تعیین محدودت سقف خرید تا 1/000/000تومن
+This app organizes supermarket products by categories and generates an editable product list. It provides a simple way to add, update, and manage items efficiently.
