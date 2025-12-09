@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from product_module import *
+from product_validator import *
 from datetime import date
 import pickle
 
@@ -31,20 +31,6 @@ def add():
         messagebox.showinfo("Success", "Products has been added")
     except Exception as e:
         messagebox.showerror("Save Error", f"Error : {e}")
-
-def save():
-    my_file = open("products","wb")
-    pickle.dump(product_list,my_file)
-    my_file.close()
-    messagebox.showinfo("Success", "Products has been Saved")
-
-
-def lode():
-    my_file = open("products","rb")
-    product_list=(pickle.load(my_file))
-    for product in product_list:
-        table.insert("", END, values=tuple(product.values()))
-    user_id.set(len(product_list)+1)
 
 
 window = Tk()
@@ -83,8 +69,6 @@ Entry(window, textvariable=expire_date).place(x=120, y=225)
 
 Button(window, text="Add", command=add).place(x=145, y=280, width=100)
 Button(window, text="Total", command=total).place(x=25, y=280, width=100)
-Button(window, text="Lode" ,command=lode).place(x=25 , y= 320, width=100)
-Button(window, text="save" ,command=save).place(x=145 , y= 320, width=100)
 
 table = ttk.Treeview(window,columns=(1,2,3,4,5,6),height=15,show="headings")
 table.heading(1,text="ID")
