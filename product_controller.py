@@ -41,7 +41,7 @@ class ProductsController:
     # save and validate info and calculate total
 
 
-    def validate_and_save(id, name, brand, quantity, price, expire_date):
+    def validate_and_save(p_id, name, brand, quantity, price, expire_date):
 
             try:
                 ProductsController.validator(name, brand, quantity, expire_date, price)
@@ -51,7 +51,7 @@ class ProductsController:
             total = quantity * price
 
             try:
-                product = Products(id,name,brand,quantity,expire_date,price,total)
+                product = Products(p_id,name,brand,quantity,expire_date,price,total)
                 product_da = ProductDataAccecc()
                 product_da.save(product)
                 return True, "Product Saved Successfully"
@@ -65,7 +65,7 @@ class ProductsController:
     #edit Feature
 
 
-    def edit(id, name, brand, quantity, price, expire_date):
+    def edit(p_id, name, brand, quantity, price, expire_date):
 
             try:
                 ProductsController.validator(name, brand, quantity, expire_date, price)
@@ -75,7 +75,7 @@ class ProductsController:
             total = quantity * price
 
             try:
-                product = Products(id,name,brand,quantity,expire_date,price,total)
+                product = Products(p_id,name,brand,quantity,expire_date,price,total)
                 product_da = ProductDataAccecc()
                 product_da.edit(product)
                 return True, "Product edited"
@@ -89,10 +89,10 @@ class ProductsController:
     #remove Feature
 
 
-    def remove(id):
+    def remove(p_id):
         try:
             product_da = ProductDataAccecc()
-            product_da.romove(id)
+            product_da.romove(p_id)
             return True, "Product Removed"
         except Exception as e:
             return False, f"Error removing Product{e}"

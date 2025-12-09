@@ -1,4 +1,4 @@
-
+from functools import total_ordering
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -9,7 +9,7 @@ from  product_controller import ProductsController
 
 
 def reset_form():
-    id.set(0)
+    p_id.set(0)
     name.set("")
     brand.set("")
     price.set(0)
@@ -26,6 +26,13 @@ def reset_form():
 
 def select_product(event):
          product = table.item(table.focus())["values"]
+         p_id.set(product[0])
+         name.set(product[1])
+         brand.set(product[2])
+         price.set(product[3])
+         quantity.set(product[4])
+         expire_date.set(product[5])
+         total.set([product[6]])
 
 window = Tk()
 window.title("Super Market")
