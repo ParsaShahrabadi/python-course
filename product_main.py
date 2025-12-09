@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from product_validator import *
+from product_controller import *
 from datetime import date
 import pickle
 
