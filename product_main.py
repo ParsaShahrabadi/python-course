@@ -34,6 +34,22 @@ def select_product(event):
          expire_date.set(product[5])
          total.set([product[6]])
 
+def save_click():
+    status, message = ProductsController.save(
+        id.get(),
+        name.get(),
+        brand.get(),
+        quantity.get(),
+        expire_date.get(),
+        price.get(),
+    )
+
+    if status:
+        reset()
+        messagebox.showinfo("Save", message)
+    else:
+        messagebox.showerror("Error", message)
+
 window = Tk()
 window.title("Super Market")
 window.geometry("800x380")
