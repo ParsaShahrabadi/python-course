@@ -66,6 +66,16 @@ def edit_click():
     else:
         messagebox.showerror("Error", message)
 
+def remove_click():
+    status, message = ProductsController.remove(id.get())
+
+
+    if status:
+        reset()
+        messagebox.showinfo("remove", message)
+    else:
+        messagebox.showerror("Error", message)
+
 window = Tk()
 window.title("Super Market")
 window.geometry("800x380")
