@@ -34,7 +34,23 @@ class ProductsController:
 
         return True
 
+    def validate_and_save(id, name, brand, quantity, price, expire_date):
 
+            try:
+                ProductsController.validator(name, brand, quantity, expire_date, price)
+            except Exception as e:
+                return False, f"{e}"
+
+            total = quantity * price
+
+            try:
+                product = Products(id,name,brand,quantity,expire_date,price,total)
+                product_da = ProductDataAccecc()
+                product_da.save(product)
+                return True, "Product Saved Successfully"
+
+            except Exception as e:
+                return False, f"Failed to save product: {e}"
 
 
 
