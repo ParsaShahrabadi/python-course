@@ -1,8 +1,5 @@
 import re
 from datetime import datetime, date, time
-from os import remove
-
-from product_main import total
 from product_modell import Products
 from product_dao import ProductDataAccecc
 
@@ -10,7 +7,10 @@ from product_dao import ProductDataAccecc
 class ProductsController:
     @staticmethod
 
+
     #validating products information
+
+
     def validator(name, brand, quantity, price, expire_date,):
 
         if not re.match("^[a-zA-Z\s]{3,30}$", name):
@@ -36,6 +36,11 @@ class ProductsController:
         return True
 
     @staticmethod
+
+
+    # save and validate info and calculate total
+
+
     def validate_and_save(id, name, brand, quantity, price, expire_date):
 
             try:
@@ -55,6 +60,11 @@ class ProductsController:
                 return False, f"Failed to save product: {e}"
 
     @staticmethod
+
+
+    #edit Feature
+
+
     def edit(id, name, brand, quantity, price, expire_date):
 
             try:
@@ -74,6 +84,11 @@ class ProductsController:
                 return False, f"Error edit product: {e}"
 
     @staticmethod
+
+
+    #remove Feature
+
+
     def remove(id):
         try:
             product_da = ProductDataAccecc()
@@ -81,6 +96,9 @@ class ProductsController:
             return True, "Product Removed"
         except Exception as e:
             return False, f"Error removing Product{e}"
+
+    # find all Feature
+
 
     @staticmethod
     def find_all():

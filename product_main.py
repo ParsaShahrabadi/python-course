@@ -2,36 +2,30 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from product_controller import *
-from datetime import date
-import pickle
+from datetime import datetime, date, time
+from  product_controller import ProductsController
 
 
-def total():
-   try:
-       messagebox.showinfo("Success", f"Total : {calculate_total(product_list)}")
-   except Exception as e:
-       messagebox.showinfo("Error", f"Error:{e}")
+
 
 def reset_form():
-    user_id.set(len(product_list)+1)
+    id.set(0)
     name.set("")
     brand.set("")
     price.set(0)
     quantity.set(0)
     expire_date.set(str(date.today()))
+    total.set("")
+    status, product_list = ProductsController.find_all()
 
+    for item in table.get_children():
+        table.delete(item)
 
-def add():
-    try:
-        product = create_product_and_validat(user_id.get(),name.get(), brand.get(), quantity.get(), price.get(), expire_date.get())
-        product_list.append(product)
-        table.insert("",END,values=tuple(product.values()))
-        reset_form()
-        messagebox.showinfo("Success", "Products has been added")
-    except Exception as e:
-        messagebox.showerror("Save Error", f"Error : {e}")
+    for person in product_list:
+        table.insert("", END, values=person)
 
+def select_product(event):
+         product = table.item(table.focus())["values"]
 
 window = Tk()
 window.title("Super Market")
