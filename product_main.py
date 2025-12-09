@@ -50,6 +50,22 @@ def save_click():
     else:
         messagebox.showerror("Error", message)
 
+def edit_click():
+    status, message = ProductsController.edit(
+        id.get(),
+        name.get(),
+        brand.get(),
+        quantity.get(),
+        expire_date.get(),
+        price.get(),
+    )
+
+    if status:
+        reset()
+        messagebox.showinfo("Edit", message)
+    else:
+        messagebox.showerror("Error", message)
+
 window = Tk()
 window.title("Super Market")
 window.geometry("800x380")
