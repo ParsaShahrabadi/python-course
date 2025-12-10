@@ -4,7 +4,7 @@ class ProductDataAccecc:
     def save(self, product):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("insert into product (p_id,product_name,brand,quantity,expire_date,price,total) values (?, ?, ?, ?, ?, ?, ?)" ,
+            cursor.execute("insert into products (p_id,product_name,brand,quantity,expire_date,price,total)" "values (?, ?, ?, ?, ?, ?, ?)" ,
                            [product.p_id,
                             product.product_name,
                             product.brand,
@@ -19,7 +19,7 @@ class ProductDataAccecc:
     def edit(self, product):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("update product set p_id=?, product_name=?, brand=? ,quantity=?, expire_date=?, price=?, total=?",
+            cursor.execute("update products set product_name=?, brand=? ,quantity=?, expire_date=?, price=?, total=?""where p_id=?",
                            [product.p_id,
                             product.product_name,
                             product.brand,
@@ -33,11 +33,12 @@ class ProductDataAccecc:
     def romove(self, p_id):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("delete from product where p_id=?", [p_id])
+            cursor.execute("delete from products where p_id=?", [p_id])
             connection.commit()
 
     def find_all(self):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("select * from product order by name, brand")
+            cursor.execute("select * from products order by product_name, brand")
             return cursor.fetchall()
+
