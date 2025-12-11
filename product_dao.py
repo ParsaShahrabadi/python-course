@@ -1,16 +1,18 @@
 import sqlite3
 
-class ProductDataAccecc:
+
+class ProductsDataAccecc:
+
     def save(self, product):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("insert into products (p_id,product_name,brand,quantity,expire_date,price,total)" "values (?, ?, ?, ?, ?, ?, ?)" ,
+            cursor.execute("insert into products (p_id,product_name,brand,quantity,price,expire_date,total)" "values (?, ?, ?, ?, ?, ?, ?)" ,
                            [product.p_id,
                             product.product_name,
                             product.brand,
                             product.quantity,
-                            product.expire_date,
                             product.price,
+                            product.expire_date,
                             product.total
                             ])
 
@@ -19,14 +21,15 @@ class ProductDataAccecc:
     def edit(self, product):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("update products set product_name=?, brand=? ,quantity=?, expire_date=?, price=?, total=?""where p_id=?",
-                           [product.p_id,
+            cursor.execute("update products set product_name=?, brand=? ,quantity=?, price=?,expire_date=?,  total=? where p_id=?",
+                           [
                             product.product_name,
                             product.brand,
                             product.quantity,
-                            product.expire_date,
                             product.price,
-                            product.total
+                            product.expire_date,
+                            product.total,
+                            product.p_id
                             ])
             connection.commit()
 

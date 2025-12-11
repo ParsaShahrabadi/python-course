@@ -1,7 +1,7 @@
 import re
-from datetime import datetime, date, time
-from product_modell import Products
-from product_dao import ProductDataAccecc
+from datetime import datetime
+from product_modell import Product
+from product_dao import ProductsDataAccecc
 
 
 class ProductsController:
@@ -11,53 +11,46 @@ class ProductsController:
     #validating products information
 
 
-    def validator(name, brand, quantity, price, expire_date,):
+    def validator(product_name, brand, quantity, price, expire_date,):
 
-        if not re.match("^[a-zA-Z\s]{3,30}$", name):
+        if not re.match(r"^[a-zA-Z\s]{3,30}$", product_name):
             raise ValueError("Invalid name")
 
-        if not re.match("^[a-zA-Z0-9\s]{3,30}$", brand):
+        if not re.match(r"^[a-zA-Z0-9\s]{3,30}$", brand):
             raise ValueError("Invalid brand")
 
-        if not price > 0:
+        if not int(price) > 0:
             raise ValueError("Invalid price")
 
-        if not quantity > 0:
+        if not int(quantity) > 0:
             raise ValueError("Invalid quantity")
 
+
         try:
-            datetime.strptime(expire_date, '%Y-%m-%d')
+            datetime.strptime(expire_date, "%Y-%m-%d")
         except ValueError:
-            raise NameError("Invalid expire format: yyyy-mm-dd")
+            raise NameError("Invalid EXPIRE format. use:(YYYY-MM-DD)")
 
-        if datetime.now().date() > datetime.strptime(expire_date, '%Y-%m-%d'):
-            raise NameError("Expier Date Padded")
+        if datetime.strptime(expire_date, "%Y-%m-%d") < datetime.now().date():
+            raise NameError("Expire Date Passed")
 
-        return True
+        return True,None
 
     @staticmethod
 
 
     # save and validate info and calculate total
 
-
-    def validate_and_save(p_id, name, brand, quantity, price, expire_date):
-
-            try:
-                ProductsController.validator(name, brand, quantity, expire_date, price)
-            except Exception as e:
-                return False, f"{e}"
-
-            total = quantity * price
-
-            try:
-                product = Products(p_id,name,brand,quantity,expire_date,price,total)
-                product_da = ProductDataAccecc()
-                product_da.save(product)
-                return True, "Product Saved Successfully"
-
-            except Exception as e:
-                return False, f"Failed to save product: {e}"
+    def save(p_id, product_name, brand, quantity, price, expire_date):
+        try:
+            ProductsController.validator(product_name, brand, quantity, price, expire_date)
+            total = int(quantity) * int(price)
+            product = Product(p_id,product_name,brand,quantity,price,expire_date,total)
+            product_da = ProductsDataAccecc()
+            product_da.save(product)
+            return True, "Product Saved Successfully"
+        except Exception as e:
+            return False, f"{e}"
 
     @staticmethod
 
@@ -65,23 +58,16 @@ class ProductsController:
     #edit Feature
 
 
-    def edit(p_id, name, brand, quantity, price, expire_date):
-
-            try:
-                ProductsController.validator(name, brand, quantity, expire_date, price)
-            except Exception as e:
-                return False, f"{e}"
-
-            total = quantity * price
-
-            try:
-                product = Products(p_id,name,brand,quantity,expire_date,price,total)
-                product_da = ProductDataAccecc()
-                product_da.edit(product)
-                return True, "Product edited"
-
-            except Exception as e:
-                return False, f"Error edit product: {e}"
+    def edit(p_id, product_name, brand, quantity, price, expire_date):
+        try:
+            ProductsController.validator(product_name, brand, quantity, price, expire_date)
+            total = int(quantity) * int(price)
+            product = Product(p_id,product_name,brand,quantity,price,expire_date,total)
+            product_da = ProductsDataAccecc()
+            product_da.edit(product)
+            return True, "Product edited"
+        except Exception as e:
+            return False, f"{e}"
 
     @staticmethod
 
@@ -91,7 +77,7 @@ class ProductsController:
 
     def remove(p_id):
         try:
-            product_da = ProductDataAccecc()
+            product_da = ProductsDataAccecc()
             product_da.romove(p_id)
             return True, "Product Removed"
         except Exception as e:
@@ -103,8 +89,9 @@ class ProductsController:
     @staticmethod
     def find_all():
         try:
-            product_da = ProductDataAccecc()
-            return True, product_da.find_all()
+            product_da = ProductsDataAccecc()
+            products = product_da.find_all()
+            return True, products
         except Exception as e:
             return False, f"Error find product {e}"
 

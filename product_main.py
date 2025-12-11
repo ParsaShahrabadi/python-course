@@ -1,47 +1,51 @@
-from functools import total_ordering
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from datetime import datetime, date, time
+from datetime import datetime
 from  product_controller import ProductsController
 
-
-
-
-def reset_form():
-    p_id.set(0)
-    name.set("")
+def reset():
+    product_name.set("")
     brand.set("")
     price.set(0)
     quantity.set(0)
-    expire_date.set(str(date.today()))
-    total.set("")
+    expire_date.set(str(datetime.now().date()))
+
+
     status, product_list = ProductsController.find_all()
 
     for item in table.get_children():
         table.delete(item)
 
-    for person in product_list:
-        table.insert("", END, values=person)
+    id_order = 0
+    if status:
+        for product in product_list:
+            table.insert("", END, values=product)
+            id_order = max(id_order, int(product[0]))
+    else:
+        messagebox.showerror("Error", product_list)
+    p_id.set(id_order+1)
+
 
 def select_product(event):
          product = table.item(table.focus())["values"]
-         p_id.set(product[0])
-         name.set(product[1])
-         brand.set(product[2])
-         price.set(product[3])
-         quantity.set(product[4])
-         expire_date.set(product[5])
-         total.set([product[6]])
+         if product:
+             p_id.set(product[0])
+             product_name.set(product[1])
+             brand.set(product[2])
+             quantity.set(product[3])
+             price.set(product[4])
+             expire_date.set(product[5])
 
 def save_click():
     status, message = ProductsController.save(
-        id.get(),
-        name.get(),
+        p_id.get(),
+        product_name.get(),
         brand.get(),
         quantity.get(),
-        expire_date.get(),
         price.get(),
+        expire_date.get(),
+
     )
 
     if status:
@@ -52,12 +56,12 @@ def save_click():
 
 def edit_click():
     status, message = ProductsController.edit(
-        id.get(),
-        name.get(),
+        p_id.get(),
+        product_name.get(),
         brand.get(),
         quantity.get(),
-        expire_date.get(),
         price.get(),
+        expire_date.get()
     )
 
     if status:
@@ -67,7 +71,7 @@ def edit_click():
         messagebox.showerror("Error", message)
 
 def remove_click():
-    status, message = ProductsController.remove(id.get())
+    status, message = ProductsController.remove(p_id.get())
 
 
     if status:
@@ -82,13 +86,13 @@ window.geometry("800x380")
 
 # id
 Label(window, text="Id").place(x=25, y=25)
-user_id = IntVar()
-Entry(window, textvariable=user_id,state="readonly").place(x=120, y=25)
+p_id = IntVar()
+Entry(window, textvariable=p_id,state="readonly").place(x=120, y=25)
 
 # name
 Label(window, text="Name").place(x=25, y=65)
-name = StringVar()
-Entry(window, textvariable=name).place(x=120, y=65)
+product_name = StringVar()
+Entry(window, textvariable=product_name).place(x=120, y=65)
 
 # brand
 Label(window, text="Brand").place(x=25, y=105)
@@ -106,31 +110,38 @@ price = IntVar()
 Entry(window, textvariable=price).place(x=120, y=185)
 
 # expire_date
-Label(window, text="Expiration Date\nYYYY-MM-DD").place(x=25, y=225)
+Label(window, text="Expire Date").place(x=25, y=225)
 expire_date = StringVar()
 Entry(window, textvariable=expire_date).place(x=120, y=225)
 
-Button(window, text="Add", command=add).place(x=145, y=280, width=100)
-Button(window, text="Total", command=total).place(x=25, y=280, width=100)
+Button(window, text="Save", width=18, command=save_click).place(x=50, y=330)
+Button(window, text="Edit", width=18, command=edit_click).place(x=50, y=360)
+Button(window, text="Remove", width=18, command=remove_click).place(x=50, y=390)
 
-table = ttk.Treeview(window,columns=(1,2,3,4,5,6),height=15,show="headings")
-table.heading(1,text="ID")
-table.heading(2,text="Name")
-table.heading(3,text="Brand")
-table.heading(4,text="Quantity")
-table.heading(5,text="Price")
-table.heading(6,text="Expire Date")
+table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings")
 
-table.column(1,width=50)
-table.column(2,width=100)
-table.column(3,width=100)
-table.column(4,width=60)
-table.column(5,width=60)
-table.column(6,width=100)
+
+table.column("ID", width=50)
+table.column("Name", width=120)
+table.column("Brand", width=120)
+table.column("Quantity", width=100)
+table.column("Expire Date", width=120)
+table.column("Price", width=100)
+table.column("Total", width=120)
+
+
+table.heading("ID",text="ID")
+table.heading("Name",text="Name")
+table.heading("Brand",text="Brand")
+table.heading("Quantity",text="Quantity")
+table.heading("Price",text="Price")
+table.heading("Expire Date",text="Expire Date")
+table.heading("Total",text="Total")
+
 
 table.place(x=300, y=25)
+table.bind("<<TreeviewSelect>>", select_product)
 
 
-
-reset_form()
+reset()
 window.mainloop()
