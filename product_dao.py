@@ -1,8 +1,8 @@
 import sqlite3
 
+# create database
 
 class ProductsDataAccecc:
-
     def save(self, product):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()

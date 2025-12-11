@@ -95,6 +95,9 @@ class ProductsController:
         except Exception as e:
             return False, f"Error find product {e}"
 
+    # chart data feature
+
+
     @staticmethod
     def get_chart_data():
         try:

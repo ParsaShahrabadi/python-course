@@ -1,3 +1,4 @@
+
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -6,7 +7,7 @@ from  product_controller import ProductsController
 from matplotlib import pyplot as plt
 
 
-
+#rest the entry and set id
 def reset():
     product_name.set("")
     brand.set("")
@@ -147,11 +148,13 @@ Label(window, text="Expire Date",bg="#abcdef").place(x=25, y=225)
 expire_date = StringVar()
 Entry(window, textvariable=expire_date).place(x=120, y=225)
 
+#buttons
 Button(window, text="Save", width=30, command=save_click).place(x=25, y=260)
 Button(window, text="Edit", width=30, command=edit_click).place(x=25, y=300)
 Button(window, text="Remove", width=30, command=remove_click).place(x=25, y=380)
 Button(window, text="Show Stock Chart", width=30, command=show_chart_click).place(x=25, y=340)
 
+#table in 7 column
 
 table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings",height=18)
 
