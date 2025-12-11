@@ -4,7 +4,7 @@ from tkinter import ttk
 from datetime import datetime
 from  product_controller import ProductsController
 from matplotlib import pyplot as plt
-import numpy as np
+
 
 
 def reset():
@@ -110,55 +110,59 @@ def show_chart_click():
 
 # ---------------------------------------------------------------------------------
 window = Tk()
-window.title("Super Market")
-window.geometry("800x380")
+window.title("SMControl")
+window.geometry("1070x450")
+window.config(bg="#abcdef")
+
+style = ttk.Style(window)
+style.theme_use('clam')
 
 # id
-Label(window, text="Id").place(x=25, y=25)
+Label(window, text="ID",bg="#abcdef").place(x=25, y=25)
 p_id = IntVar()
 Entry(window, textvariable=p_id,state="readonly").place(x=120, y=25)
 
 # name
-Label(window, text="Name").place(x=25, y=65)
+Label(window, text="Item Name",bg="#abcdef").place(x=25, y=65)
 product_name = StringVar()
 Entry(window, textvariable=product_name).place(x=120, y=65)
 
 # brand
-Label(window, text="Brand").place(x=25, y=105)
+Label(window, text="Brand",bg="#abcdef").place(x=25, y=105)
 brand = StringVar()
 Entry(window, textvariable=brand).place(x=120, y=105)
 
 # quantity
-Label(window, text="Quantity").place(x=25, y=145)
+Label(window, text="Quantity",bg="#abcdef").place(x=25, y=145)
 quantity = IntVar()
 Entry(window, textvariable=quantity).place(x=120, y=145)
 
 # price
-Label(window, text="Price").place(x=25, y=185)
+Label(window, text="Price",bg="#abcdef").place(x=25, y=185)
 price = IntVar()
 Entry(window, textvariable=price).place(x=120, y=185)
 
 # expire_date
-Label(window, text="Expire Date").place(x=25, y=225)
+Label(window, text="Expire Date",bg="#abcdef").place(x=25, y=225)
 expire_date = StringVar()
 Entry(window, textvariable=expire_date).place(x=120, y=225)
 
-Button(window, text="Save", width=18, command=save_click).place(x=50, y=330)
-Button(window, text="Edit", width=18, command=edit_click).place(x=50, y=360)
-Button(window, text="Remove", width=18, command=remove_click).place(x=50, y=390)
-Button(window, text="Show Stock Chart", width=18, command=show_chart_click).place(x=50, y=420)
+Button(window, text="Save", width=30, command=save_click).place(x=25, y=260)
+Button(window, text="Edit", width=30, command=edit_click).place(x=25, y=300)
+Button(window, text="Remove", width=30, command=remove_click).place(x=25, y=380)
+Button(window, text="Show Stock Chart", width=30, command=show_chart_click).place(x=25, y=340)
 
 
-table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings")
+table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings",height=18)
 
 
-table.column("ID", width=50)
-table.column("Name", width=120)
-table.column("Brand", width=120)
-table.column("Quantity", width=100)
-table.column("Expire Date", width=120)
-table.column("Price", width=100)
-table.column("Total", width=120)
+table.column("ID", width=50,anchor=CENTER)
+table.column("Name", width=120,anchor=CENTER)
+table.column("Brand", width=120,anchor=CENTER)
+table.column("Quantity", width=100,anchor=CENTER)
+table.column("Expire Date", width=120,anchor=CENTER)
+table.column("Price", width=100,anchor=CENTER)
+table.column("Total", width=120,anchor=CENTER)
 
 
 table.heading("ID",text="ID")

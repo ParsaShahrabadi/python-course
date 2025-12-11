@@ -42,7 +42,7 @@ class ProductsDataAccecc:
     def find_all(self):
         with sqlite3.connect("smc_db") as connection:
             cursor = connection.cursor()
-            cursor.execute("select * from products order by product_name, brand")
+            cursor.execute("select * from products order by p_id")
             return cursor.fetchall()
 
     def get_stock_data(self):
