@@ -31,7 +31,7 @@ class ProductsController:
         except ValueError:
             raise NameError("Invalid EXPIRE format. use:(YYYY-MM-DD)")
 
-        if datetime.strptime(expire_date, "%Y-%m-%d") < datetime.now().date():
+        if datetime.strptime(expire_date, "%Y-%m-%d").date() < datetime.now().date():
             raise NameError("Expire Date Passed")
 
         return True,None
@@ -94,6 +94,19 @@ class ProductsController:
             return True, products
         except Exception as e:
             return False, f"Error find product {e}"
+
+    @staticmethod
+    def get_chart_data():
+        try:
+            product_da = ProductsDataAccecc()
+            data = product_da.get_stock_data()
+
+            names = [item[0] for item in data]
+            quantities = [item[1] for item in data]
+
+            return True, (names, quantities)
+        except Exception as e:
+            return False, f"Error getting chart data: {e}"
 
 
 

@@ -45,3 +45,8 @@ class ProductsDataAccecc:
             cursor.execute("select * from products order by product_name, brand")
             return cursor.fetchall()
 
+    def get_stock_data(self):
+        with sqlite3.connect("smc_db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT product_name, quantity FROM products")
+            return cursor.fetchall()

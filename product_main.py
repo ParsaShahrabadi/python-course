@@ -3,6 +3,9 @@ from tkinter import messagebox
 from tkinter import ttk
 from datetime import datetime
 from  product_controller import ProductsController
+from matplotlib import pyplot as plt
+import numpy as np
+
 
 def reset():
     product_name.set("")
@@ -80,6 +83,32 @@ def remove_click():
     else:
         messagebox.showerror("Error", message)
 
+
+def show_chart_click():
+    status, data = ProductsController.get_chart_data()
+
+    if not status:
+        messagebox.showerror("Error", data)
+        return
+
+    names, quantities = data
+
+    if not names:
+        messagebox.showinfo("Chart", "No products in stock to display chart.")
+        return
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(names, quantities, color='skyblue')
+
+    plt.xlabel("Product Name")
+    plt.ylabel("Quantity in Stock")
+    plt.title("Current Inventory Stock Levels")
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    plt.show()
+
+# ---------------------------------------------------------------------------------
 window = Tk()
 window.title("Super Market")
 window.geometry("800x380")
@@ -117,6 +146,8 @@ Entry(window, textvariable=expire_date).place(x=120, y=225)
 Button(window, text="Save", width=18, command=save_click).place(x=50, y=330)
 Button(window, text="Edit", width=18, command=edit_click).place(x=50, y=360)
 Button(window, text="Remove", width=18, command=remove_click).place(x=50, y=390)
+Button(window, text="Show Stock Chart", width=18, command=show_chart_click).place(x=50, y=420)
+
 
 table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings")
 
