@@ -50,3 +50,9 @@ class ProductsDataAccecc:
             cursor = connection.cursor()
             cursor.execute("SELECT product_name, quantity FROM products")
             return cursor.fetchall()
+
+    def find_by_search(self, keyword):
+        with sqlite3.connect("smc_db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("select * from products where product_name=? or expire_date=?", [keyword, keyword])
+            return cursor.fetchall()
