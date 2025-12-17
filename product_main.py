@@ -124,6 +124,18 @@ def search_click():
 
     messagebox.showinfo("Search", "Item not found in the list!")
 
+
+def calculate_total_click():
+    total_sum = 0
+
+    for item in table.get_children():
+        product = table.item(item)["values"]
+        total_sum += (product[6])
+    discount = total_sum * 0.95
+    if not 10000000 < total_sum:
+        messagebox.showinfo("Total", f"Total Value of all product: {total_sum}")
+    else:
+        messagebox.showinfo("Total", f"Total Value of all product: {total_sum} \n discount 5% (; : {discount} ")
 # ---------------------------------------------------------------------------------
 window = Tk()
 window.title("SMControl")
@@ -166,7 +178,7 @@ Entry(window, textvariable=expire_date).place(x=120, y=225)
 # search
 Label(window, text="Search Item:\n(Name or Date)", bg="#abcdef").place(x=290, y=420)
 search_entry = StringVar()
-Entry(window, textvariable=search_entry).place(x=380, y=420)
+Entry(window, textvariable=search_entry).place(x=380, y=422)
 
 
 #buttons
@@ -174,8 +186,8 @@ Button(window, text="Save", width=30, command=save_click).place(x=25, y=260)
 Button(window, text="Edit", width=30, command=edit_click).place(x=25, y=300)
 Button(window, text="Remove", width=30, command=remove_click).place(x=25, y=380)
 Button(window, text="Show Stock Chart", width=30, command=show_chart_click).place(x=25, y=340)
-Button(window, text="Find", width=10, command=search_click).place(x=510, y=418)
-
+Button(window, text="Find", width=16, command=search_click).place(x=510, y=420)
+Button(window, text="All Total", width=16, command=calculate_total_click).place(x=912, y=420)
 #table in 7 column
 
 table = ttk.Treeview(window,columns=("ID","Name","Brand","Quantity","Price","Expire Date","Total"),show="headings",height=18)
