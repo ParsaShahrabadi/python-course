@@ -111,6 +111,14 @@ class ProductsController:
         except Exception as e:
             return False, f"Error getting chart data: {e}"
 
+    @staticmethod
+    def search_product(keyword):
+        try:
+            product_da = ProductsDataAccecc()
+            products = product_da.find_by_search(keyword)
+            return True, products
+        except Exception as e:
+            return False, f"Error searching {e}"
 
 
 
